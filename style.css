@@ -1,0 +1,47 @@
+label{
+    display: block;
+}
+
+span{
+    color: blue;
+    cursor: pointer;
+}
+
+table {
+    margin-top: 0.2em;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 0.3em;
+    text-align: left;
+}
+
+th{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+form{
+    padding: 1em;
+    border: 1px solid #555;
+    width: 200px;
+}
+
+input{
+    margin-bottom: 0.8em;
+}
+
+#list{
+    margin-bottom: 1em;
+}
+
+#filterDiv{
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: none;
+}

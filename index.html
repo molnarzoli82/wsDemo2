@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Form</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <form method="post" id="urlap">
+            <label>Név:</label>
+            <input type="text" name="name" id="name">
+            <label>Email:</label> 
+            <input type="email" name="email" id="email">
+            <label>Telefonszám:</label> 
+            <input type="text" name="telefon" id="telefon">
+            <label>Születés dátuma:</label> 
+            <input type="date" name="szuletesiDatum" id="szuletesiDatum">
+            <hr>
+            <label>Jogosítvánnyal rendelkezik:</label>
+            <input type="radio" id="jogositvany" name="jogositvany" value="1">igen<br>
+            <input type="radio" id="jogositvany" name="jogositvany" value="0">nem
+            <label>Kedvenc hobbik:</label>
+            <input name="hobbiKerekpar" id="hobbiKerekpar" type="checkbox" value="on">kerékpár<br>
+            <input name="hobbiTurazas" id="hobbiTurazas" type="checkbox" value="on">túrázás<br>
+            <input name="hobbiHegymaszas" id="hobbiHegymaszas" type="checkbox" value="on">hegymászás<br>
+            <input name="hobbiProgramozas" id="hobbiProgramozas" type="checkbox" value="on">programozás<br>
+            <input name="hobbiEgyeb" id="hobbiEgyeb" type="checkbox" value="on">egyéb<br>
+            <button id="save" type="submit">Rögzít</button>
+            <button id="reset" type="reset">Reset</button>
+            <input type="hidden" name="modosit" id="modosit" value="0">
+        </form>
+        <button id="list">Rögzített adatok listázása</button><br>
+
+        <div id="filterDiv">
+            Szűrés a névben: 
+            <input type="text" id="szures">
+        </div>
+
+        <div id="lista"></div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

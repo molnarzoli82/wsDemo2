@@ -7,7 +7,7 @@ require 'model.php';
 
 $db = new PDO('mysql:host='.DATABASE_HOST.';dbname='.DATABASE_NAME.';charset=utf8mb4', DATABASE_USER, DATABASE_PASSWORD);
 
-if (filter_input(INPUT_POST, 'modosit', FILTER_SANITIZE_STRING)) {
+if (filter_input(INPUT_GET, 'method', FILTER_SANITIZE_STRING) == 'set') {
     $person = new person($db);
     $id = filter_input(INPUT_POST, 'modosit', FILTER_SANITIZE_STRING);
     if ($id == '0') {

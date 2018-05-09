@@ -5,7 +5,7 @@ $(document).ready(function () {
 
         e.preventDefault();
 
-        $.post('controller.php', $('form').serialize(), function (html) {
+        $.post('controller.php?method=set', $('form').serialize(), function (html) {
 
         }).done(function (html) {
             alert('Az űrlap adatai rögzítve');

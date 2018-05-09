@@ -21,6 +21,19 @@ $(document).ready(function () {
 
     });
 
+    document.getElementById("nameTh").addEventListener("click", function () {
+        list('name');
+    }, true);
+    document.getElementById("emailTh").addEventListener("click", function () {
+        list('email');
+    }, true);
+    document.getElementById("phoneTh").addEventListener("click", function () {
+        list('phone');
+    }, true);
+    document.getElementById("birthdayTh").addEventListener("click", function () {
+        list('birthday');
+    }, true);
+
     document.getElementById("reset").addEventListener("click", function () {
         $("#save").html('Rögzít');
     }, true);
@@ -48,29 +61,16 @@ function list(order) {
     $.ajax({
         type: 'POST',
         url: 'controller.php',
-        data: 'method=list'+szures+'&order='+order,
+        data: 'method=list' + szures + '&order=' + order,
         dataType: 'html',
         cache: false
     })
             .done(function (html) {
-                $('#lista').html(html);
+                $('#adatsorok').html(html);
+                $("#lista").show();
 
-                //if (document.getElementById("szures") != null) {
-                $( "#filterDiv" ).show();
-                
-                document.getElementById("nameTh").addEventListener("click", function () {
-                    list('name');
-                }, true);
-                document.getElementById("emailTh").addEventListener("click", function () {
-                    list('email');
-                }, true);
-                document.getElementById("phoneTh").addEventListener("click", function () {
-                    list('phone');
-                }, true);
-                document.getElementById("birthdayTh").addEventListener("click", function () {
-                    list('birthday');
-                }, true);
-                //}
+                $("#filterDiv").show();
+
             });
 
 }
@@ -79,7 +79,7 @@ function szerkeszt(id) {
     $.ajax({
         type: 'POST',
         url: 'controller.php',
-        data: 'method=edit'+szures+'&id='+id,
+        data: 'method=edit' + szures + '&id=' + id,
         dataType: 'json',
         cache: false
     })
@@ -90,8 +90,9 @@ function szerkeszt(id) {
                 document.getElementById("szuletesiDatum").value = html.birthday;
                 document.getElementById("modosit").value = html.id;
                 $("#save").html('Módosít');
-                $("#filterDiv" ).hide();
-                $("#lista").html('');
+
+                $("#lista").hide();
+                $("#filterDiv").hide();
 
                 if (html.hobbiKerekpar == '1') {
                     $("#hobbiKerekpar").prop('checked', true);

@@ -27,16 +27,8 @@ if (filter_input(INPUT_POST, 'method', FILTER_SANITIZE_STRING) == 'list') {
     foreach ($person->gets($order, $filter) as $row) {
         $rows .= '<tr><td>' . $row->name . '</td><td>' . $row->phone . '</td><td>' . $row->email . '</td><td>' . $row->birthday . '</td><td><span onclick="szerkeszt('.$row->id.');">szerkeszt</span></td></tr>';
     }
-
-    echo '
-    <table>
-        <thead>
-            <tr><th id="nameTh">Név</th><th id="phoneTh">Telefon</th><th id="emailTh">Email</th><th id="birthdayTh">Születési idő</th><th></th></tr>
-        </thead>
-        <tbody>
-        ' . $rows . '
-        </tbody>
-    </table>';
+    
+    echo $rows;
 }
 
 if (filter_input(INPUT_POST, 'method', FILTER_SANITIZE_STRING) == 'edit') {

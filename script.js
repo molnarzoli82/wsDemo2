@@ -5,7 +5,7 @@ $(document).ready(function () {
 
         e.preventDefault();
 
-        $.post('controller.php?method=set', $('form').serialize(), function (html) {
+        $.post('controller.php', $('form').serialize(), function (html) {
 
         }).done(function (html) {
             alert('Az űrlap adatai rögzítve');
@@ -47,7 +47,8 @@ function list(order) {
     }
     $.ajax({
         type: 'POST',
-        url: 'controller.php?method=list' + szures + '&order=' + order,
+        url: 'controller.php',
+        data: 'method=list'+szures+'&order='+order,
         dataType: 'html',
         cache: false
     })
@@ -66,7 +67,7 @@ function list(order) {
                 document.getElementById("phoneTh").addEventListener("click", function () {
                     list('phone');
                 }, true);
-                document.getElementById("birthTh").addEventListener("click", function () {
+                document.getElementById("birthdayTh").addEventListener("click", function () {
                     list('birthday');
                 }, true);
                 //}
@@ -77,7 +78,8 @@ function list(order) {
 function szerkeszt(id) {
     $.ajax({
         type: 'POST',
-        url: 'controller.php?method=edit&id=' + id,
+        url: 'controller.php',
+        data: 'method=edit'+szures+'&id='+id,
         dataType: 'json',
         cache: false
     })

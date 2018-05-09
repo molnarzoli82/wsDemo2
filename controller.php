@@ -7,8 +7,9 @@ require 'model.php';
 
 $db = new PDO('mysql:host='.DATABASE_HOST.';dbname='.DATABASE_NAME.';charset=utf8mb4', DATABASE_USER, DATABASE_PASSWORD);
 
-if (filter_input(INPUT_GET, 'method', FILTER_SANITIZE_STRING) == 'set') {
-    $person = new person($db);
+$person = new person($db);
+
+if (filter_input(INPUT_POST, 'method', FILTER_SANITIZE_STRING) == 'set') {
     $id = filter_input(INPUT_POST, 'modosit', FILTER_SANITIZE_STRING);
     if ($id == '0') {
         $person->insert();
@@ -17,15 +18,11 @@ if (filter_input(INPUT_GET, 'method', FILTER_SANITIZE_STRING) == 'set') {
     }
 }
 
-if (filter_input(INPUT_GET, 'method', FILTER_SANITIZE_STRING) == 'list') {
-    
-    $order = filter_input(INPUT_GET, 'order', FILTER_SANITIZE_STRING);
-    $filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
+if (filter_input(INPUT_POST, 'method', FILTER_SANITIZE_STRING) == 'list') {
+    $order = filter_input(INPUT_POST, 'order', FILTER_SANITIZE_STRING);
+    $filter = filter_input(INPUT_POST, 'filter', FILTER_SANITIZE_STRING);
     
     if (!$order){ $order = 'name';}
-    
-    $person = new person($db);
-
     
     foreach ($person->gets($order, $filter) as $row) {
         $rows .= '<tr><td>' . $row->name . '</td><td>' . $row->phone . '</td><td>' . $row->email . '</td><td>' . $row->birthday . '</td><td><span onclick="szerkeszt('.$row->id.');">szerkeszt</span></td></tr>';
@@ -34,7 +31,7 @@ if (filter_input(INPUT_GET, 'method', FILTER_SANITIZE_STRING) == 'list') {
     echo '
     <table>
         <thead>
-            <tr><th id="nameTh">Név</th><th id="phoneTh">Telefon</th><th id="emailTh">Email</th><th id="birthTh">Születési idő</th><th></th></tr>
+            <tr><th id="nameTh">Név</th><th id="phoneTh">Telefon</th><th id="emailTh">Email</th><th id="birthdayTh">Születési idő</th><th></th></tr>
         </thead>
         <tbody>
         ' . $rows . '
@@ -42,11 +39,10 @@ if (filter_input(INPUT_GET, 'method', FILTER_SANITIZE_STRING) == 'list') {
     </table>';
 }
 
-if (filter_input(INPUT_GET, 'method', FILTER_SANITIZE_STRING) == 'edit') {
+if (filter_input(INPUT_POST, 'method', FILTER_SANITIZE_STRING) == 'edit') {
     
-    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+    $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     
-    $person = new person($db);
     echo json_encode($person->get($id));
 
 }

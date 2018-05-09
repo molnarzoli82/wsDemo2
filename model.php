@@ -3,7 +3,7 @@
 session_start();
 
 interface personInterface {
-
+    
     public function __construct($db);
 
     public function get($id);

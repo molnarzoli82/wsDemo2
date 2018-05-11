@@ -2,9 +2,21 @@
 
 session_start();
 
+class Db {
+
+    private static $instance = NULL;
+
+    public static function getInstance() {
+        if (!isset(self::$instance)) {
+            $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+            self::$instance = new PDO('mysql:host=' . DATABASE_HOST . ';dbname=' . DATABASE_NAME . ';port=' . DATABASE_PORT . ';charset='.DATABASE_CHARSET, DATABASE_USER, DATABASE_PASSWORD, $pdo_options);
+        }
+        return self::$instance;
+    }
+
+}
+
 interface personInterface {
-    
-    public function __construct($db);
 
     public function get($id);
 
@@ -19,13 +31,10 @@ interface personInterface {
 
 class person implements personInterface {
 
-    public function __construct($db) {
-        $this->db = $db;
-    }
-
     public function get($id) {
 
-        $sth = $this->db->prepare("SELECT * FROM urlap WHERE id = ?");
+        $db = Db::getInstance();
+        $sth = $db->prepare("SELECT * FROM urlap WHERE id = ?");
         $sth->execute(array($id));
         $data = $sth->fetchAll(PDO::FETCH_ASSOC);
         return $data[0];
@@ -52,8 +61,9 @@ class person implements personInterface {
             $szuresQuery = "WHERE name LIKE '%" . $filter . "%'";
         }
 
-        $filter = '%'.$filter.'%';   
-        $sth = $this->db->prepare("SELECT * FROM urlap WHERE name LIKE :filter ORDER BY ".$orderString);
+        $filter = '%' . $filter . '%';
+        $db = Db::getInstance();
+        $sth = $db->prepare("SELECT * FROM urlap WHERE name LIKE :filter ORDER BY " . $orderString);
         $sth->bindParam(':filter', $filter, PDO::PARAM_STR);
         $sth->execute();
         $data = $sth->fetchAll(PDO::FETCH_OBJ);
@@ -83,7 +93,8 @@ class person implements personInterface {
     public function insert() {
         $this->set();
 
-        $statement = $this->db->prepare("INSERT INTO `urlap` 
+        $db = Db::getInstance();
+        $statement = $db->prepare("INSERT INTO `urlap` 
                     (`name`, `email`, `phone`, `birthday`, `drivingLicence`, 
                      `hobbiKerekpar`, `hobbiTurazas`, `hobbiHegymaszas`, `hobbiProgramozas`, `hobbiEgyeb`) 
                      VALUES 
@@ -96,7 +107,8 @@ class person implements personInterface {
     public function update($id) {
         $this->set();
 
-        $statement = $this->db->prepare("UPDATE `urlap` SET name=:nev, email=:email, phone=:telefon, birthday=:szuletesidatum, drivingLicence=:jogositvany, 
+        $db = Db::getInstance();
+        $statement = $db->prepare("UPDATE `urlap` SET name=:nev, email=:email, phone=:telefon, birthday=:szuletesidatum, drivingLicence=:jogositvany, 
                      hobbiKerekpar=:hobbiKerekpar, hobbiTurazas=:hobbiTurazas, hobbiHegymaszas=:hobbiHegymaszas, hobbiProgramozas=:hobbiProgramozas, hobbiEgyeb=:hobbiEgyeb WHERE id = $id;");
 
         $statement->execute($this->post);

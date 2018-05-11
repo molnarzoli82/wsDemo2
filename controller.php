@@ -1,13 +1,11 @@
 <?php
-
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+header('Content-Type: text/html; charset=utf-8');
 
 require 'config.php';
 require 'model.php';
 
-$db = new PDO('mysql:host='.DATABASE_HOST.';dbname='.DATABASE_NAME.';charset=utf8mb4', DATABASE_USER, DATABASE_PASSWORD);
-
-$person = new person($db);
+$person = new person();
 
 if (filter_input(INPUT_POST, 'method', FILTER_SANITIZE_STRING) == 'set') {
     $id = filter_input(INPUT_POST, 'modosit', FILTER_SANITIZE_STRING);

@@ -27,7 +27,7 @@ if (filter_input(INPUT_POST, 'method', FILTER_SANITIZE_STRING) == 'list') {
     foreach ($person->gets($order, $filter) as $row) {
         $rows .= '<tr><td>' . $row->name . '</td><td>' . $row->phone . '</td><td>' . $row->email . '</td><td>' . $row->birthday . '</td><td><span onclick="szerkeszt('.$row->id.');">szerkeszt</span></td></tr>';
     }
-    
+    #echo json_encode($person->gets($order, $filter));
     echo $rows;
 }
 

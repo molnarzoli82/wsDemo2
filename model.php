@@ -51,17 +51,12 @@ class person implements personInterface {
         if ($filter) {
             $szuresQuery = "WHERE name LIKE '%" . $filter . "%'";
         }
-        $query = $this->db->query("SELECT * FROM urlap $szuresQuery ORDER BY $orderString");
-        $data = $query->fetchAll(PDO::FETCH_OBJ);
 
-        #ebben az esetben az $order értéke az oszlop sorszáma kell hogy legyen, de nem igazán működik (PDO-s rekord rendezés???)
-//        $filter = '%'.$filter.'%';   
-//        $sth = $this->db->prepare("SELECT * FROM urlap WHERE name LIKE :filter ORDER BY :order");
-//        $sth->bindParam(':filter', $filter, PDO::PARAM_STR);
-//        $sth->bindParam(':order', $order, PDO::PARAM_INT);
-//        $sth->bindParam(':direction', $filter, PDO::PARAM_STR);
-//        $sth->execute();
-//        $data = $sth->fetchAll(PDO::FETCH_OBJ);
+        $filter = '%'.$filter.'%';   
+        $sth = $this->db->prepare("SELECT * FROM urlap WHERE name LIKE :filter ORDER BY ".$orderString);
+        $sth->bindParam(':filter', $filter, PDO::PARAM_STR);
+        $sth->execute();
+        $data = $sth->fetchAll(PDO::FETCH_OBJ);
 
         return $data;
     }

@@ -66,9 +66,14 @@ function list(order) {
         cache: false
     })
             .done(function (html) {
+                
+                //var trHTML = '';
+                //$.each(html, function (i, item) {
+                //    trHTML += '<tr><td>' + item.name + '</td><td>' + item.phone + '</td><td>' + item.email + '</td><td>' + item.birthday + '</td><td><span onclick="szerkeszt('+item.id+');">szerkeszt</span></td></tr>';
+                //});
+                //$('#adatsorok').html(trHTML);
                 $('#adatsorok').html(html);
                 $("#lista").show();
-
                 $("#filterDiv").show();
 
             });
